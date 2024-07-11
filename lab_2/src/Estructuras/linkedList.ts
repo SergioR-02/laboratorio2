@@ -136,10 +136,4 @@ export class LinkedList<T> {
     }
 }
 
-//Implementacion
-const lista = new LinkedList<number>()
-lista.addStart(1)
-lista.addEnd(3)
-lista.addEnd(4)
-lista.insert(2, 1)
-lista.print() // 2 4 1 3
+
