@@ -1,34 +1,32 @@
-import { LinkedList } from "./linkedList";
 
-class Tareas{
+
+export class Task{
   private id:number;
   private descripcion:string;
   private estado:string;
-  private prioridad:string;
-  constructor(id:number,descripcion:string,estado:string,prioridad:string){
+  private prioridad:number;
+
+  constructor(id:number,descripcion:string,estado:string,prioridad:number){
     this.id=id;
     this.descripcion=descripcion;
     this.estado=estado;
     this.prioridad=prioridad;
   }
-  get getId(){
+  getId(){
     return this.id;
   }
-  get getDescripcion(){
+  getDescripcion(){
     return this.descripcion;
   }
-  get getEstado(){
+  getEstado(){
     return this.estado;
   }
-  get getPrioridad(){
+  getPrioridad(){
     return this.prioridad;
   }
-}
 
-export class CrearTarea{
-  static crearTarea(id:number,descripcion:string,estado:string,prioridad:string,linkedList:LinkedList<Tareas>):void{
-    const tarea = new Tareas(id,descripcion,estado,prioridad);
-    linkedList.addStart(tarea)
+  set estadoNuevo(estado:string){
+    this.estado=estado;
   }
 }
 

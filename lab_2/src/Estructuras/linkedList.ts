@@ -116,6 +116,18 @@ export class LinkedList<T> {
     return null // Si no se encuentra, devolver null
   }
 
+  // Eliminar el primer elemento de la lista
+  deleteFirst(): void {
+    if (!this.head) {
+        return // Si la lista está vacía, no hacer nada
+    }
+    this.head = this.head.next // Actualizar la referencia del primer nodo
+    if (!this.head) {
+        this.tail = null // Si la lista queda vacía, actualizar la referencia del último nodo
+    }
+    this.size-- // Decrementar el tamaño de la lista
+}
+
   print(): void {
     let current = this.head
     while (current) {
@@ -124,16 +136,6 @@ export class LinkedList<T> {
     }
   }
 
-    // Convertir la lista enlazada a un array
-    toArray(): T[] {
-        const elements: T[] = [];
-        let current = this.head;
-        while (current) {
-            elements.push(current.value); // Añadir el valor de cada nodo al array
-            current = current.next; // Avanzar al siguiente nodo
-        }
-        return elements; // Devolver el array resultante
-    }
 }
 
 

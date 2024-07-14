@@ -10,7 +10,7 @@ class TreeNode<T> {
   }
 }
 
-export class BinaryTree<T> {
+export class BinaryTree<T extends { getId(): number; getPrioridad(): number }> {
   root: TreeNode<T> | null;
 
   constructor() {
@@ -28,7 +28,7 @@ export class BinaryTree<T> {
   }
 
   private insertNode(node: TreeNode<T>, newNode: TreeNode<T>): void {
-    if (newNode.value < node.value) {
+    if (newNode.value.getId() < node.value.getId()) {
       if (node.left === null) {
         node.left = newNode;
       } else {
@@ -43,21 +43,39 @@ export class BinaryTree<T> {
     }
   }
 
-  // Buscar un nodo en el árbol binario
-  search(value: T): boolean {
-    return this.searchNode(this.root, value);
+  // Buscar un nodo en el árbol binario por id
+  searchById(id: number): T | null {
+    return this.searchNodeById(this.root, id);
   }
 
-  private searchNode(node: TreeNode<T> | null, value: T): boolean {
+  private searchNodeById(node: TreeNode<T> | null, id: number): T | null {
     if (node === null) {
-      return false;
+      return null;
     }
-    if (value < node.value) {
-      return this.searchNode(node.left, value);
-    } else if (value > node.value) {
-      return this.searchNode(node.right, value);
+    if (id < node.value.getId()) {
+      return this.searchNodeById(node.left, id);
+    } else if (id > node.value.getId()) {
+      return this.searchNodeById(node.right, id);
     } else {
-      return true;
+      return node.value;
+    }
+  }
+
+  // Buscar un nodo en el árbol binario por prioridad
+  searchByPriority(priority: number): T | null {
+    return this.searchNodeByPriority(this.root, priority);
+  }
+
+  private searchNodeByPriority(node: TreeNode<T> | null, priority: number): T | null {
+    if (node === null) {
+      return null;
+    }
+    if (priority < node.value.getPrioridad()) {
+      return this.searchNodeByPriority(node.left, priority);
+    } else if (priority > node.value.getPrioridad()) {
+      return this.searchNodeByPriority(node.right, priority);
+    } else {
+      return node.value;
     }
   }
 
@@ -106,19 +124,3 @@ export class BinaryTree<T> {
     }
   }
 }
-
-// Ejemplo de uso
-const arbol = new BinaryTree<number>();
-arbol.insert(10);
-arbol.insert(5);
-arbol.insert(15);
-arbol.insert(3);
-arbol.insert(7);
-arbol.insert(12);
-arbol.insert(17);
-
-console.log("In-order:", arbol.inorder()); // [3, 5, 7, 10, 12, 15, 17]
-console.log("Pre-order:", arbol.preorder()); // [10, 5, 3, 7, 15, 12, 17]
-console.log("Post-order:", arbol.postorder()); // [3, 7, 5, 12, 17, 15, 10]
-console.log("Search 7:", arbol.search(7)); // true
-console.log("Search 8:", arbol.search(8)); // false

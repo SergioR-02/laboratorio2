@@ -27,6 +27,10 @@ export class Stack<T> {
     }
     return this.stack[this.stack.length - 1];
   }
+
+  contains(element: T): boolean {
+    return this.stack.includes(element);
+  }
 }
 
 
