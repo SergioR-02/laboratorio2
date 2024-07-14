@@ -1,0 +1,23 @@
+.campoSeleccionar{
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  margin: 24px 0;
+}
+.campoSeleccionar label{
+  display: block;
+  font-weight: 600 ;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.campoSeleccionar select{
+  width: 100%;
+  box-shadow: 10px 10px 30px 0px #0000000F;
+  background: #FFFFFF;
+  border: none;
+  padding: 15px 15px;
+  outline-color: #6278F7;
+  font-size: 16px;
+}

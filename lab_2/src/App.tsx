@@ -1,11 +1,11 @@
-import { TaskManager} from './Estructuras/gestor';
+import Form from './components/formulario/Form'
 
 function App() {
-  const taskManager = new TaskManager();
+
   
   return (
     <>
-
+      <Form />
     </>
   )
 }
