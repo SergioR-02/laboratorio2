@@ -1,11 +1,11 @@
 
 import "./CampoTexto.css";
 
-function CampoTexto() {
+function CampoTexto({label,placeholder,value,handleChange}: {label: string; placeholder: string, value: string, handleChange: (e:any) => void}) {
   return (
     <div className="campoTexto">
-      <label>Epa la arepa</label>
-      <input placeholder="Ingresar" type="text" />
+      <label>{label}</label>
+      <input value={value} onChange={(e)=>handleChange(e)} placeholder={placeholder} type="text" />
     </div>
   );
 }

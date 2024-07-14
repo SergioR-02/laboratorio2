@@ -49,11 +49,12 @@ export class TaskManager {
       console.log("No tasks in progress");
     }
     else{
-    const task = this.inProgressTasks.dequeue();
-    task.estadoNuevo = "Completed"; // Cambio de estado
-    console.log(`Completing task ${task.getId()}`);
-    this.check.push(task);
-    this.completedTasks.push(task);}
+      const task = this.inProgressTasks.dequeue();
+      task.estadoNuevo = "Completed"; // Cambio de estado
+      console.log(`Completing task ${task.getId()}`);
+      this.check.push(task);
+      this.completedTasks.push(task);
+    }
   }
 
   addDependency(task1: Task, task2: Task): void {
@@ -66,20 +67,20 @@ export class TaskManager {
 }
 
 // Ejemplo de uso
-const taskManager = new TaskManager();
-const task1 = new Task(1, "Design", "hola", 5);
-const task2 = new Task(2, "Implementation","Hola", 3);
-const task3 = new Task(3, "Testing", "Hola", 1);
+export const taskManager = new TaskManager();
+// const task1 = new Task(1, "Design", "hola", 5);
+// const task2 = new Task(2, "Implementation","Hola", 3);
+// const task3 = new Task(3, "Testing", "Hola", 1);
 
-taskManager.addTask(task1);
-taskManager.addTask(task2);
-taskManager.addTask(task3);
+// taskManager.addTask(task1);
+// taskManager.addTask(task2);
+// taskManager.addTask(task3);
 
-taskManager.addDependency(task1, task2); // task2 depende de task1
-taskManager.addDependency(task2, task3); // task3 depende de task2
+// taskManager.addDependency(task1, task2); // task2 depende de task1
+// taskManager.addDependency(task2, task3); // task3 depende de task2
 
 
-taskManager.startTask(task3); // Luego intentamos iniciar task1
-taskManager.completeTask();    // Completamos task1
-taskManager.completeTask();    // Completamos task2
+// taskManager.startTask(task3); // Luego intentamos iniciar task1
+// // taskManager.completeTask();    // Completamos task1
+// taskManager.completeTask();    // Completamos task2
 taskManager.taskGraph.displayGraph();

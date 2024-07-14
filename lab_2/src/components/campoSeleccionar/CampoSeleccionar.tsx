@@ -1,15 +1,15 @@
 import "./CampoSeleccionar.css";
 
 
-const CampoSeleccionar = () =>{
+const CampoSeleccionar = ({label,value,handleSelect}:{label:string, value:string,handleSelect:(e:any)=>void}) =>{
 
   return(
     <div className="campoSeleccionar">
-      <label>Seleccionar</label>
-      <select>
-        <option>Uno</option>
-        <option>Dos</option>
-        <option>Tres</option>
+      <label >{label}</label>
+      <select value={value} onChange={(e)=>handleSelect(e)}>
+        <option>Alta</option>
+        <option>Media</option>
+        <option>Baja</option>
       </select>
     </div>
   )

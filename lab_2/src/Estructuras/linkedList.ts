@@ -136,6 +136,15 @@ export class LinkedList<T> {
     }
   }
 
+  toArray(): T[] {
+    const elements: T[] = []
+    let current = this.head
+    while (current) {
+      elements.push(current.value) // Añadir el valor de cada nodo al array
+      current = current.next // Avanzar al siguiente nodo
+    }
+    return elements // Devolver el array resultante
+  }
 }
 
 
