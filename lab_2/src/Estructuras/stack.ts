@@ -31,6 +31,10 @@ export class Stack<T> {
   contains(element: T): boolean {
     return this.stack.includes(element);
   }
+
+  toArray(): T[] {
+    return this.stack;
+  }
 }
 
 

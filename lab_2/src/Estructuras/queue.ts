@@ -25,4 +25,8 @@ export class Queue <T>{
     }
     return this.queue[0];
   }
+
+  toArray(): T[] {
+    return this.queue;
+  }
 }
