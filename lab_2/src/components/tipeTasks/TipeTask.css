@@ -1,0 +1,32 @@
+*{
+  box-sizing: border-box;
+}
+
+.containerTask{
+  width: 100%;
+  background-color: #8b7171;
+  padding: 20px ;
+  text-align: center;
+  overflow: hidden;
+}
+
+.containerTask .title{
+  font-size: 28px;
+  font-weight: bold;
+
+  border-bottom: 4px solid #57C278 ;
+  display: inline-block;
+  padding-bottom: 6px;
+}
+
+.linea{
+  display: flex;
+  justify-content: space-evenly;
+}
+
+.carrusel{
+  width: 1230px;
+  display : block;
+  margin: 0 auto;
+
+}

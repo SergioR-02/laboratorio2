@@ -1,0 +1,62 @@
+
+
+.Tarjeta{
+  width: 280px;
+
+  box-shadow: 5px 5px 15px rgba(0, 0, 0, 0.08);
+  position: relative;
+  border-radius: 20px;
+  margin: 30px 10px 24px;
+}
+
+.Tarjeta .encabezado{
+  background-color: red;
+  border-radius: 10px 10px 0 0 ;
+  padding: 17px;
+}
+
+
+.Tarjeta .cuerpo{  
+  background: #FFFFFF;
+  border-radius: 0px 0px 10px 10px;
+  padding: 25px 0;
+  min-height: 100px;
+  font-family: 'Montserrat', sans-serif;
+}
+
+.Tarjeta .cuerpo h4 {
+  color: #6278F7;
+  font-size: 18px;
+  line-height: 22px;
+  font-weight: bold;
+  margin: 0;
+}
+
+.Tarjeta .cuerpo h5 {
+  font-size: 18px;
+  line-height: 22px;
+  color: #212121;
+  padding: 0 24px;
+  font-weight: 400;
+  margin: 0;
+  word-wrap: break-word; /* Hace que el texto se divida en palabras */
+  white-space: normal; /* Permite que el texto se ajuste a la línea */
+}
+
+.eliminar{
+  position: absolute;
+  right: 5px;
+  top: 5px;
+  font-size: 24px; /* Ajusta este valor según el tamaño que desees */
+  cursor: pointer;
+}
+
+button{
+  background-color: #6278F7;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  margin: 10px 0 0;
+}

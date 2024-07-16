@@ -3,6 +3,7 @@ import AddForm from './components/addForm/AddForm'
 import { useState,useEffect ,useCallback} from 'react'
 import {taskManager} from './Estructuras/gestor'
 import {Task} from './Estructuras/tareas'
+import {TipeTask} from './components/tipeTasks/TipeTask'
 
 
 
@@ -22,15 +23,13 @@ function App() {
     setCrear(new Date().toISOString()); 
   }, []);
 
+  
+
   useEffect(() => {
     setList(taskManager.pendingTasks.toArray())
+  
     console.log(list)
   },[crear])
-
-
-  
-  
-  
 
   return (
     <>
@@ -41,6 +40,7 @@ function App() {
           <h1 key={task.getId()}>{task.getDescripcion()}</h1>
         ))}
       </div>
+      <TipeTask title='Tareas Pendientes'/>
     </>
   )
 }
