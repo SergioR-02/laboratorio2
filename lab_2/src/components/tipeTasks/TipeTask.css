@@ -8,12 +8,25 @@
   padding: 20px ;
   text-align: center;
   overflow: hidden;
+  position: relative;;
+}
+
+.containerTask .boton2{
+  background-color: #00028a;
+  color: white;
+  padding: 14px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  position: absolute;
+  left:15%;
+  border-radius: 10px;
+  top:10px;
 }
 
 .containerTask .title{
   font-size: 28px;
   font-weight: bold;
-
   border-bottom: 4px solid #00028a ;
   display: inline-block;
   padding-bottom: 6px;

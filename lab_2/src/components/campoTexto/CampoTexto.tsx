@@ -5,7 +5,7 @@ function CampoTexto({label,placeholder,value,handleChange}: {label: string; plac
   return (
     <div className="campoTexto">
       <label>{label}</label>
-      <input value={value} onChange={(e)=>handleChange(e)} placeholder={placeholder} type="text" />
+      <input required value={value} onChange={(e)=>handleChange(e)} placeholder={placeholder} type="text" />
     </div>
   );
 }

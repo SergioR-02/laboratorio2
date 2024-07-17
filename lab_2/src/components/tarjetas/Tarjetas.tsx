@@ -2,7 +2,7 @@ import { IoIosCloseCircle } from 'react-icons/io';
 import "./Tarjetas.css"
 import { Task } from '../../Estructuras/tareas';
 
-const Tarjetas = ({task,backgrounds}:{task:Task,backgrounds:string}) => {
+const Tarjetas = ({task,backgrounds,handleStartTask,type}:{type:string,task:Task,backgrounds:string,handleStartTask:(task:Task)=>string|void}) => {
 
   const prioridad = (prioridad:number):string => {
     switch (prioridad) {
@@ -23,7 +23,7 @@ const Tarjetas = ({task,backgrounds}:{task:Task,backgrounds:string}) => {
 
   return(
     <div className="Tarjeta" >
-      <IoIosCloseCircle className="eliminar" />
+      {type==="pending" && <IoIosCloseCircle className="eliminar" />}
       <div className="encabezado" style={{ backgroundColor: backgrounds}}>
       </div>
       
@@ -31,7 +31,7 @@ const Tarjetas = ({task,backgrounds}:{task:Task,backgrounds:string}) => {
         <h4>Prioridad: {prioridad(task.getPrioridad())}</h4>
         <h5>{task.getDescripcion()}</h5>
         <p>Id: {task.getId()}</p>
-        <button>Iniciar</button>
+        {type!="pending" ? <></> : <button className="boton3" onClick={()=>handleStartTask(task)}>Iniciar</button>}
       </div>
     </div>
   )

@@ -6,7 +6,8 @@ const CampoSeleccionar = ({label,value,handleSelect}:{label:string, value:string
   return(
     <div className="campoSeleccionar">
       <label >{label}</label>
-      <select value={value} onChange={(e)=>handleSelect(e)}>
+      <select required value={value} onChange={(e)=>handleSelect(e)}>
+        <option value="" disabled defaultValue="" hidden>Seleccionar prioridad</option>
         <option>Alta</option>
         <option>Media</option>
         <option>Baja</option>

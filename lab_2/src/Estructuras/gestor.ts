@@ -28,7 +28,7 @@ export class TaskManager {
     this.taskGraph.addTask(task);
   }
 
-  startTask(task: Task): void {
+  startTask(task: Task): string|void {
     const dependencies = this.taskGraph.getDependencies(task);
 
     // Check if all dependencies are completed
@@ -36,17 +36,18 @@ export class TaskManager {
 
     if (dependenciesCompleted) {
       this.pendingTasks.delete(task);
+      //TODO this.taskBST.delete(task);
       task.estadoNuevo = "Progress"; // Cambio de estado
       console.log(`Starting task ${task.getId()}: `);
       this.inProgressTasks.enqueue(task);
     } else {
-      console.log(`Cannot start task ${task.getId()}): Dependencies are not completed.`);
+      return (`Cannot start task ${task.getId()}): Dependencies are not completed.`);
     }
   }
 
-  completeTask(): void {
+  completeTask(): string|void {
     if (this.inProgressTasks.empty()) {
-      console.log("No tasks in progress");
+      return "No tasks in progress";
     }
     else{
       const task = this.inProgressTasks.dequeue();
@@ -57,8 +58,20 @@ export class TaskManager {
     }
   }
 
+  deleteCompletedTask(): string|void {
+    if (this.completedTasks.empty()) {
+      return "No tasks completed";
+    } else {
+      this.completedTasks.pop();
+    }
+  }
+
   addDependency(task1: Task, task2: Task): void {
     this.taskGraph.addDependency(task1, task2);
+  }
+
+  deletePendingTask(task: Task): void {
+    this.pendingTasks.delete(task);
   }
 
   displayGraph(): void {

@@ -7,8 +7,15 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 
+interface TipeTaskProps {
+  title:string; 
+  listTask:Task[];
+  background:string;
+  handlefunction:(task?:Task)=>string|void;
+  type:string;
+}
 
-const TipeTask = ({title,listTask,background}:{title:string; listTask:Task[],background:string}) => {
+const TipeTask = ({title,listTask,background,handlefunction,type}:TipeTaskProps) => {
 
   const settings = {
     dots: false,
@@ -25,12 +32,19 @@ const TipeTask = ({title,listTask,background}:{title:string; listTask:Task[],bac
     
     
     <section className="containerTask" style={{ backgroundColor: transparentColor}}>
+      {type!="pending" && listTask.length>0 ? 
+        <button className="boton2" style={{ background: background}} 
+          onClick={()=>(handlefunction())}>
+          {type==="progress" ? "Completar" : "Eliminar"}
+        </button> : <></>}
       <h2 className="title" style={{ borderBottom: `4px solid ${background}` }}>{title}</h2>
       <div className="carrusel">
         {listTask.length>0 && <Slider {...settings}>
           {
             listTask.map((task) => (
-              <Tarjetas key={task.getId()} task={task} backgrounds={background}/>
+              <Tarjetas key={task.getId()} task={task} 
+              backgrounds={background} handleStartTask={handlefunction} 
+              type={type}/>
             ))
           }
         </Slider>}

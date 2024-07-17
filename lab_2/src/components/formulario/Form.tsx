@@ -34,8 +34,10 @@ const Formulario = ({handleCrteateTask}:
 
 
   const handleSubmit = (e: any):void => {
-    e.preventDefault()
-    const hola:number = id.current++
+    e.preventDefault();
+    const hola:number = id.current++;
+    setDescripcion('');
+    setPrioridad('');
     handleCrteateTask(hola,descripcion,'pending',prioridadToNumber(prioridad))
   }
 
