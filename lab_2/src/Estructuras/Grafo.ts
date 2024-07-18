@@ -13,7 +13,7 @@ export class TaskGraph {
     }
   }
 
-  addDependency(task1: Task, task2: Task): void {
+  addDependency(task1: Task, task2: Task): void { // task1 depends on task2
     if (this.graph.has(task1.getId()) && this.graph.has(task2.getId())) {
       this.graph.get(task1.getId())?.push(task2.getId());
     }
@@ -21,6 +21,20 @@ export class TaskGraph {
 
   getDependencies(task: Task): number[] {
     return this.graph.get(task.getId()) || [];
+  }
+
+  removeTask(task: Task): void {
+    const taskId = task.getId();
+    
+    // Remove the task from the graph
+    if (this.graph.has(taskId)) {
+      this.graph.delete(taskId);
+    }
+
+    // Remove the task from the dependencies of other tasks
+    this.graph.forEach((dependencies, key) => {
+      this.graph.set(key, dependencies.filter(depId => depId !== taskId));
+    });
   }
 
   displayGraph(): void {

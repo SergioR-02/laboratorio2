@@ -3,7 +3,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  margin: 12px 0 10px;
+  margin: 12px 0 30px;
 }
 
 .titulo h2{
@@ -13,7 +13,7 @@
   line-height: 72px;
   text-align: center;
   color: #6278F7;
-  padding-bottom: 24px;
+  padding-bottom: 9px;
   border-bottom: 4px solid  #6278F7;
 }
 

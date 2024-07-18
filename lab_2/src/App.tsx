@@ -40,7 +40,7 @@ function App() {
   },[]);
 
   useEffect(() => {
-    setList(taskManager.pendingTasks.toArray())
+    setList(taskManager.taskBST.inorder())
     setProgress(taskManager.inProgressTasks.toArray())
     setCompleted(taskManager.completedTasks.toArray())
     // console.log(list)
@@ -52,6 +52,7 @@ function App() {
     <>
       <AddForm handleChange={handleChange} />
       {add && <Form handleCrteateTask={handleCrteateTask} />}
+      <TipeTask title='Busqueda' listTask={completed} background="#00E3FE" handlefunction={():void=>{}}  type="search"/>
       <TipeTask title='Tareas Pendientes' listTask={list} background="#148300" handlefunction={handleStartTask} type="pending"/>
       <TipeTask title='Tareas en Progreso' listTask={progress} background="#000E83" handlefunction={handleCompleteTask}  type="progress" />
       <TipeTask title='Tareas Completadas' listTask={completed} background="#830075" handlefunction={handleDeleteCompletedTask}  type="completed"/>

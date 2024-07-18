@@ -30,28 +30,31 @@ export class TaskManager {
 
   startTask(task: Task): string|void {
     const dependencies = this.taskGraph.getDependencies(task);
-
+    
     // Check if all dependencies are completed
     const dependenciesCompleted = dependencies.every(depId => this.check.find(task => task.getId() === depId));
 
     if (dependenciesCompleted) {
       this.pendingTasks.delete(task);
       //TODO this.taskBST.delete(task);
-      task.estadoNuevo = "Progress"; // Cambio de estado
+      task.estadoNuevo = "Progreso"; // Cambio de estado
       console.log(`Starting task ${task.getId()}: `);
+      
       this.inProgressTasks.enqueue(task);
     } else {
+      console.log(`Cannot start task ${task.getId()}: Dependencies are not completed.`);
       return (`Cannot start task ${task.getId()}): Dependencies are not completed.`);
     }
   }
 
   completeTask(): string|void {
     if (this.inProgressTasks.empty()) {
-      return "No tasks in progress";
+      console.log("No tasks in Progreso");
+      return "No tasks in Progreso";
     }
     else{
       const task = this.inProgressTasks.dequeue();
-      task.estadoNuevo = "Completed"; // Cambio de estado
+      task.estadoNuevo = "Completada"; // Cambio de estado
       console.log(`Completing task ${task.getId()}`);
       this.check.push(task);
       this.completedTasks.push(task);
@@ -60,7 +63,8 @@ export class TaskManager {
 
   deleteCompletedTask(): string|void {
     if (this.completedTasks.empty()) {
-      return "No tasks completed";
+      console.log("No tasks Completada");
+      return "No tasks Completada";
     } else {
       this.completedTasks.pop();
     }
@@ -72,6 +76,7 @@ export class TaskManager {
 
   deletePendingTask(task: Task): void {
     this.pendingTasks.delete(task);
+    this.taskGraph.removeTask(task);
   }
 
   displayGraph(): void {
@@ -81,19 +86,25 @@ export class TaskManager {
 
 // Ejemplo de uso
 export const taskManager = new TaskManager();
-// const task1 = new Task(1, "Design", "hola", 5);
-// const task2 = new Task(2, "Implementation","Hola", 3);
-// const task3 = new Task(3, "Testing", "Hola", 1);
+const task1 = new Task(1, "Design", "hola", 3);
+const task2 = new Task(2, "Implementation","Hola", 3);
+const task3 = new Task(3, "Testing", "Hola", 1);
+const task4 = new Task(3, "Testing", "hpta", 3);
 
-// taskManager.addTask(task1);
-// taskManager.addTask(task2);
-// taskManager.addTask(task3);
 
-// taskManager.addDependency(task1, task2); // task2 depende de task1
+taskManager.addTask(task1);
+taskManager.addTask(task2);
+taskManager.addTask(task3);
+taskManager.addTask(task4);
+
+console.log(taskManager.taskBST.searchByPriority(3));
+
+
+// taskManager.addDependency(task1, task2); // task1 depende de task2
 // taskManager.addDependency(task2, task3); // task3 depende de task2
 
 
-// taskManager.startTask(task3); // Luego intentamos iniciar task1
-// // taskManager.completeTask();    // Completamos task1
+// taskManager.startTask(task1); // Luego intentamos iniciar task1
+// taskManager.completeTask();    // Completamos task1
 // taskManager.completeTask();    // Completamos task2
-taskManager.taskGraph.displayGraph();
+// taskManager.taskGraph.displayGraph();

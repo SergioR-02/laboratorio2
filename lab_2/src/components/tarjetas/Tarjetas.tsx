@@ -17,8 +17,7 @@ const Tarjetas = ({task,backgrounds,handleStartTask,type}:{type:string,task:Task
     }
   }
   
-  const transparentColor = `${backgrounds}80`;
-  console.log(transparentColor)
+
 
 
   return(

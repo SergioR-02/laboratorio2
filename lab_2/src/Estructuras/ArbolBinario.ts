@@ -28,7 +28,7 @@ export class BinaryTree<T extends { getId(): number; getPrioridad(): number }> {
   }
 
   private insertNode(node: TreeNode<T>, newNode: TreeNode<T>): void {
-    if (newNode.value.getId() < node.value.getId()) {
+    if (newNode.value.getPrioridad() < node.value.getPrioridad()) {
       if (node.left === null) {
         node.left = newNode;
       } else {
@@ -43,39 +43,76 @@ export class BinaryTree<T extends { getId(): number; getPrioridad(): number }> {
     }
   }
 
-  // Buscar un nodo en el árbol binario por id
-  searchById(id: number): T | null {
-    return this.searchNodeById(this.root, id);
+  // Eliminar un nodo del árbol binario por id
+  remove(id: number): void {
+    this.root = this.removeNode(this.root, id);
   }
 
-  private searchNodeById(node: TreeNode<T> | null, id: number): T | null {
+  private removeNode(node: TreeNode<T> | null, id: number): TreeNode<T> | null {
     if (node === null) {
       return null;
     }
+
     if (id < node.value.getId()) {
-      return this.searchNodeById(node.left, id);
+      node.left = this.removeNode(node.left, id);
+      return node;
     } else if (id > node.value.getId()) {
-      return this.searchNodeById(node.right, id);
+      node.right = this.removeNode(node.right, id);
+      return node;
     } else {
-      return node.value;
+      // Nodo con solo un hijo o sin hijos
+      if (node.left === null) {
+        return node.right;
+      } else if (node.right === null) {
+        return node.left;
+      }
+
+      // Nodo con dos hijos: obtener el sucesor en inorden (el más pequeño en el subárbol derecho)
+      node.value = this.minValueNode(node.right).value;
+      node.right = this.removeNode(node.right, node.value.getId());
+      return node;
     }
   }
 
-  // Buscar un nodo en el árbol binario por prioridad
-  searchByPriority(priority: number): T | null {
-    return this.searchNodeByPriority(this.root, priority);
+  private minValueNode(node: TreeNode<T>): TreeNode<T> {
+    let current = node;
+    while (current.left !== null) {
+      current = current.left;
+    }
+    return current;
   }
 
-  private searchNodeByPriority(node: TreeNode<T> | null, priority: number): T | null {
-    if (node === null) {
-      return null;
+  // Buscar todos los nodos en el árbol binario por id
+  searchById(id: number): T[] {
+    const result: T[] = [];
+    this.searchNodesById(this.root, id, result);
+    return result;
+  }
+
+  private searchNodesById(node: TreeNode<T> | null, id: number, result: T[]): void {
+    if (node !== null) {
+      if (node.value.getId() === id) {
+        result.push(node.value);
+      }
+      this.searchNodesById(node.left, id, result);
+      this.searchNodesById(node.right, id, result);
     }
-    if (priority < node.value.getPrioridad()) {
-      return this.searchNodeByPriority(node.left, priority);
-    } else if (priority > node.value.getPrioridad()) {
-      return this.searchNodeByPriority(node.right, priority);
-    } else {
-      return node.value;
+  }
+
+  // Buscar todos los nodos en el árbol binario por prioridad
+  searchByPriority(priority: number): T[] {
+    const result: T[] = [];
+    this.searchNodesByPriority(this.root, priority, result);
+    return result;
+  }
+
+  private searchNodesByPriority(node: TreeNode<T> | null, priority: number, result: T[]): void {
+    if (node !== null) {
+      if (node.value.getPrioridad() === priority) {
+        result.push(node.value);
+      }
+      this.searchNodesByPriority(node.left, priority, result);
+      this.searchNodesByPriority(node.right, priority, result);
     }
   }
 
@@ -94,33 +131,4 @@ export class BinaryTree<T extends { getId(): number; getPrioridad(): number }> {
     }
   }
 
-  // Recorrer el árbol en preorden (Pre-order traversal)
-  preorder(): T[] {
-    const result: T[] = [];
-    this.preorderTraversal(this.root, result);
-    return result;
-  }
-
-  private preorderTraversal(node: TreeNode<T> | null, result: T[]): void {
-    if (node !== null) {
-      result.push(node.value);
-      this.preorderTraversal(node.left, result);
-      this.preorderTraversal(node.right, result);
-    }
-  }
-
-  // Recorrer el árbol en postorden (Post-order traversal)
-  postorder(): T[] {
-    const result: T[] = [];
-    this.postorderTraversal(this.root, result);
-    return result;
-  }
-
-  private postorderTraversal(node: TreeNode<T> | null, result: T[]): void {
-    if (node !== null) {
-      this.postorderTraversal(node.left, result);
-      this.postorderTraversal(node.right, result);
-      result.push(node.value);
-    }
-  }
 }
