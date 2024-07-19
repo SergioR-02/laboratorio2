@@ -78,6 +78,7 @@ export class LinkedList<T> {
       this.size++ // Incrementar el tamaño de la lista
     }
   }
+  
   // Eliminar el primer nodo que coincide con el valor dado
   delete(value: T): void {
     if (!this.head) {

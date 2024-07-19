@@ -43,44 +43,6 @@ export class BinaryTree<T extends { getId(): number; getPrioridad(): number }> {
     }
   }
 
-  // Eliminar un nodo del árbol binario por id
-  remove(id: number): void {
-    this.root = this.removeNode(this.root, id);
-  }
-
-  private removeNode(node: TreeNode<T> | null, id: number): TreeNode<T> | null {
-    if (node === null) {
-      return null;
-    }
-
-    if (id < node.value.getId()) {
-      node.left = this.removeNode(node.left, id);
-      return node;
-    } else if (id > node.value.getId()) {
-      node.right = this.removeNode(node.right, id);
-      return node;
-    } else {
-      // Nodo con solo un hijo o sin hijos
-      if (node.left === null) {
-        return node.right;
-      } else if (node.right === null) {
-        return node.left;
-      }
-
-      // Nodo con dos hijos: obtener el sucesor en inorden (el más pequeño en el subárbol derecho)
-      node.value = this.minValueNode(node.right).value;
-      node.right = this.removeNode(node.right, node.value.getId());
-      return node;
-    }
-  }
-
-  private minValueNode(node: TreeNode<T>): TreeNode<T> {
-    let current = node;
-    while (current.left !== null) {
-      current = current.left;
-    }
-    return current;
-  }
 
   // Buscar todos los nodos en el árbol binario por id
   searchById(id: number): T[] {
@@ -130,5 +92,4 @@ export class BinaryTree<T extends { getId(): number; getPrioridad(): number }> {
       this.inorderTraversal(node.right, result);
     }
   }
-
 }
