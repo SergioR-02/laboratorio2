@@ -1,12 +1,12 @@
 import "./TipeTask.css"
 import Tarjetas from '../tarjetas/Tarjetas'
 import { Task } from "../../Estructuras/tareas";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import {taskManager} from '../../Estructuras/gestor'
-
+import { LinkedList } from "../../Estructuras/linkedList";
 
 
 interface TipeTaskProps {
@@ -19,10 +19,23 @@ interface TipeTaskProps {
 
 const TipeTask = ({title,listTask,background,handlefunction,type}:TipeTaskProps) => {
 
+  
   const [serch, setSerch] = useState<string>('');
   const [valueSerch, setValueSerch] = useState<string>('');
-  const [newList, setNewList] = useState<Task[]>([]);
+  const [newList, setNewList] = useState<Task[]>(listTask);
+  const [ordenar, setOrdenar] = useState<boolean>(false);
 
+  const handleOrdenar = ():void => {
+    setOrdenar(!ordenar);
+  }
+
+  useEffect(() => {
+    if(ordenar){
+      setNewList(taskManager.taskBST.inorder());
+    }else{
+      setNewList(listTask);
+    }
+  },[ordenar,listTask])
 
   const handleChange = (e: any):void => {
     setSerch(e.target.value);
@@ -32,10 +45,9 @@ const TipeTask = ({title,listTask,background,handlefunction,type}:TipeTaskProps)
     setValueSerch(e.target.value);
   }
 
-  const handleSubmit = (): void => {
 
+  const handleSubmit = (): void => {
     console.log('Enviado:', valueSerch);
-  
   }
 
   const settings = {
@@ -46,21 +58,23 @@ const TipeTask = ({title,listTask,background,handlefunction,type}:TipeTaskProps)
     slidesToScroll: 1
   };
 
-
-
   const transparentColor = `${background}30`;
-
-
-
 
   return(
     <section className="containerTask" style={{ backgroundColor: transparentColor}}>
 
-      {type!="pending" && listTask.length>0 ? 
+      {type!="pending"&& type!="search" && listTask.length>0 ? 
         <button className="boton2" style={{ background: background}} 
           onClick={()=>(handlefunction())}>
           {type==="progress" ? "Completar" : "Eliminar"}
-        </button> : <></>}
+        </button> :  <></>}
+      {
+        type==="pending" && listTask.length>1 && 
+        <button className="boton2" style={{ background: background}} 
+          onClick={()=>(handleOrdenar())}>
+            {ordenar ? "Ordenar por prioridad"  : "Normal"}
+        </button>
+      }
       <h2 className="title" style={{ borderBottom: `4px solid ${background}` }}>{title}</h2>
       { type==="search" &&
         <div>
@@ -79,9 +93,9 @@ const TipeTask = ({title,listTask,background,handlefunction,type}:TipeTaskProps)
         </div>
       }
       <div className="carrusel">
-        {listTask.length>0 && <Slider {...settings}>
+        {type!= "search" && listTask.length>0 && <Slider {...settings}>
           {
-            listTask.map((task) => (
+            newList.map((task) => (
               <Tarjetas key={task.getId()} task={task} 
               backgrounds={background} handleStartTask={handlefunction} 
               type={type}/>

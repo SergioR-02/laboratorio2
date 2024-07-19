@@ -5,7 +5,7 @@
 .containerTask{
   width: 100%;
   background-color: #8b7171;
-  padding: 20px ;
+  padding: 50px ;
   text-align: center;
   overflow: hidden;
   position: relative;;
@@ -21,7 +21,7 @@
   position: absolute;
   left:15%;
   border-radius: 10px;
-  top:10px;
+  top:45px;
 }
 
 .containerTask .title{

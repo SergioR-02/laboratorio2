@@ -17,8 +17,17 @@
   border-bottom: 4px solid  #6278F7;
 }
 
-.titulo img{
+.titulo .add{
   position: absolute;
   cursor: pointer;
+  left: 15%;
+}
+
+.titulo img{
+  width: 87px;
+  position: absolute;
+  cursor: pointer;
+}
+.titulo .search{
   right: 15%;
 }

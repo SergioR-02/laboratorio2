@@ -1,12 +1,17 @@
 import Form from './components/formulario/Form'
 import AddForm from './components/addForm/AddForm'
-import { useState,useEffect ,useCallback} from 'react'
 import {taskManager} from './Estructuras/gestor'
-import {Task} from './Estructuras/tareas'
 import {TipeTask} from './components/tipeTasks/TipeTask'
+import {useEffect, useState, useCallback} from 'react'
+import {Task} from './Estructuras/tareas'
+
+
+
+
 
 function App() {
   const [add, setAdd] = useState(false)
+  const [barSearch, setBarSearch] = useState(false)
   const [list, setList] = useState<Task[]>([])
   const [progress, setProgress] = useState<Task[]>([])
   const [completed, setCompleted] = useState<Task[]>([])
@@ -14,6 +19,10 @@ function App() {
 
   const handleChange = () => {
     setAdd(!add)
+  }
+
+  const handleSearch = () => {
+    setBarSearch(!barSearch)
   }
 
   const handleCrteateTask = useCallback((id: number, descripcion: string, estado: string, prioridad: number): void => {
@@ -40,7 +49,7 @@ function App() {
   },[]);
 
   useEffect(() => {
-    setList(taskManager.taskBST.inorder())
+    setList(taskManager.pendingTasks.toArray())
     setProgress(taskManager.inProgressTasks.toArray())
     setCompleted(taskManager.completedTasks.toArray())
     // console.log(list)
@@ -50,12 +59,15 @@ function App() {
 
   return (
     <>
-      <AddForm handleChange={handleChange} />
+
+      <AddForm handleChange={handleChange} handleSearch={handleSearch}/>
       {add && <Form handleCrteateTask={handleCrteateTask} />}
-      <TipeTask title='Busqueda' listTask={completed} background="#00E3FE" handlefunction={():void=>{}}  type="search"/>
+      {barSearch && <TipeTask title='Busqueda' listTask={completed} background="#84DAE4" handlefunction={():void=>{}}  type="search"/>}
       <TipeTask title='Tareas Pendientes' listTask={list} background="#148300" handlefunction={handleStartTask} type="pending"/>
       <TipeTask title='Tareas en Progreso' listTask={progress} background="#000E83" handlefunction={handleCompleteTask}  type="progress" />
       <TipeTask title='Tareas Completadas' listTask={completed} background="#830075" handlefunction={handleDeleteCompletedTask}  type="completed"/>
+
+
     </>
   )
 }
