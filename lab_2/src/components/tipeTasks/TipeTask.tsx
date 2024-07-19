@@ -75,7 +75,6 @@ const TipeTask = ({ title, listTask, background, handlefunction, type }: TipeTas
 
     if (serch === "id") {
       x= parseInt(sanitizedValue, 10);
-      console.log('ID Enviado:', x);
     } else {
       switch (sanitizedValue) {
         case 'alta':
@@ -88,12 +87,17 @@ const TipeTask = ({ title, listTask, background, handlefunction, type }: TipeTas
           x = 3;
           break;
         default:
-          setError('Prioridad no válida.');
+          setError('Prioridad no válida (Alta, Media, Baja)');
           return;
       }
     }
-
-    setNewList(taskManager.searchTask(serch, x)||[] );
+    const result = taskManager.searchTask(serch, x);
+    if (result.length === 0) {
+      setError('No se encontraron tareas.');
+      setNewList([]);
+      return;
+    }
+    setNewList(result);
     setError(null);
     
   }
@@ -126,24 +130,24 @@ const TipeTask = ({ title, listTask, background, handlefunction, type }: TipeTas
       
       <h2 className="title" style={{ borderBottom: `4px solid ${background}` }}>{title}</h2>
       {type === "search" &&
-        <div>
-          <form onSubmit={(e)=>handleSubmit(e)}>
-            <button >Enviar</button>
+        <div className="busqueda">
+          <form className="busquedaForm" onSubmit={(e)=>handleSubmit(e)}>
+            <button className="busquedaBotton">Enviar</button>
             <input
               required
-              className="container__inputNamePomodoro"
+              className="busquedaImput"
               placeholder={`Busqueda ${serch === "" ? "" : `por ${serch}`}`}
               value={valueSerch}
               onChange={(e) => handleSerch(e)}
             />
-            <select value={serch} onChange={(e) => handleChange(e)} required>
+            <select className="busquedaSelect" value={serch} onChange={(e) => handleChange(e)} required>
               <option value="" disabled defaultValue="" hidden>Tipo de busqueda</option>
               <option value="prioridad">Prioridad</option>
               <option value="id">ID</option>
             </select>
           </form>
 
-          {error && <p>{error}</p>}
+          {error && <p className="error">{error}</p>}
             
         </div>
       }

@@ -82,13 +82,13 @@ export class TaskManager {
     this.taskGraph.displayGraph();
   }
 
-  searchTask(type:string,id: number): Task[] | null {
+  searchTask(type:string,id: number): Task[] {
     if(type === 'id'){
       return this.taskBST.searchById(id);
-    }else if(type === 'prioridad'){
+    }else{
       return this.taskBST.searchByPriority(id);
     }
-    return null;
+
   }
 }
 

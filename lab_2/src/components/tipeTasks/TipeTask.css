@@ -41,5 +41,27 @@
   width: 1230px;
   display : block;
   margin: 0 auto;
+}
 
+.busquedaForm{
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin: 20px;
+}
+
+.busquedaBotton{
+  background-color: #62dfec;
+  color: white;
+  padding: 14px 20px;
+  border: none;
+  cursor: pointer;
+  font-size: 15px;
+  border-radius: 10px;
+}
+
+.error{
+  color: red;
+  font-size: 20px;
+  font-weight: bold;
 }
