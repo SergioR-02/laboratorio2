@@ -26,9 +26,14 @@ function App() {
     setBarSearch(!barSearch)
   }
 
-  const handleCreateTask = useCallback((id: number, descripcion: string, estado: string, prioridad: number): void => {
+  const handleCreateTask = useCallback((id: number, descripcion: string, estado: string, prioridad: number,dependencias?:Task[]): void => {
     const task = new Task(id, descripcion, estado, prioridad);
-    taskManager.addTask(task);
+    
+    if (dependencias) {
+      taskManager.addTask(task, dependencias);
+    }else{
+      taskManager.addTask(task);
+    }
     setCrear(new Date().toISOString()); 
   }, []);
 

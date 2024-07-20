@@ -22,10 +22,16 @@ export class TaskManager {
     this.check = [];
   }
 
-  addTask(task: Task): void {
+  addTask(task: Task, dependencies?:Task[]): void {
     this.pendingTasks.addStart(task);
     this.taskBST.insert(task);
     this.taskGraph.addTask(task);
+
+    if (dependencies) {
+      dependencies.forEach((dep) => {
+        this.addDependency(task, dep);
+      });
+    }
   }
 
   startTask(task: Task): string|void {
@@ -93,9 +99,9 @@ export class TaskManager {
 
 // Ejemplo de uso
 export const taskManager = new TaskManager();
-const task1 = new Task(1, "Design", "hola", 3);
-const task2 = new Task(2, "Implementation","Hola", 3);
-const task3 = new Task(3, "Testing", "Hola", 1);
+// const task1 = new Task(1, "Design", "hola", 3);
+// const task2 = new Task(2, "Implementation","Hola", 3);
+// const task3 = new Task(3, "Testing", "Hola", 1);
 // const task4 = new Task(4, "Testing", "hpta", 3);
 // const task5 = new Task(1, "1", "hola", 2);
 // const task6 = new Task(2, "2","Hola", 1);
@@ -105,9 +111,9 @@ const task3 = new Task(3, "Testing", "Hola", 1);
 
 
 
-taskManager.addTask(task1);
-taskManager.addTask(task2);
-taskManager.addTask(task3);
+// taskManager.addTask(task1);
+// taskManager.addTask(task2);
+// taskManager.addTask(task3);
 // taskManager.addTask(task4);
 // taskManager.addTask(task5);
 // taskManager.addTask(task6);

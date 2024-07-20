@@ -1,23 +1,13 @@
-import React, { useState } from "react";
 import "./Depend.css";
 import { Task } from "../../Estructuras/tareas";
 
 interface DependProps {
   list: Task[];
+  value: Task[];
+  handleChange: (e: any) => void;
 }
 
-function Depend({ list }: DependProps) {
-  const [selectedTasks, setSelectedTasks] = useState<Task[]>([]);
-
-  const handleCheckboxChange = (task: Task) => {
-    setSelectedTasks((prevSelectedTasks) => {
-      if (prevSelectedTasks.includes(task)) {
-        return prevSelectedTasks.filter((t) => t !== task);
-      } else {
-        return [...prevSelectedTasks, task];
-      }
-    });
-  };
+function Depend({ list , value, handleChange}: DependProps) {
 
   return (
     <div className="containerChecks">
@@ -29,8 +19,8 @@ function Depend({ list }: DependProps) {
             <label className="checkboxLabel">
               <input
                 type="checkbox"
-                checked={selectedTasks.includes(task)}
-                onChange={() => handleCheckboxChange(task)}
+                checked={value.includes(task)}
+                onChange={() => handleChange(task)}
               />
               {task.getDescripcion()}
             </label>

@@ -7,14 +7,26 @@ import Depend from '../Dependencias/Depend';
 import { Task } from '../../Estructuras/tareas';
 
 interface FormularioProps  {
-  handleCreateTask: (id: number, descripcion: string, estado: string, prioridad: number) => void;
+  handleCreateTask: (id: number, descripcion: string, estado: string, prioridad: number,dependencias?:Task[]) => void;
   list: Task[];
 };
 
 const Formulario = ({ handleCreateTask, list }: FormularioProps) => {
   const [descripcion, setDescripcion] = useState('')
   const [prioridad, setPrioridad] = useState('')
+  const [dependencias, setDependencias] = useState<Task[]>([])
   const id = useRef(0)
+
+
+  const handleCheckboxChange = (task: Task) => {
+    setDependencias((prevSelectedTasks) => {
+      if (prevSelectedTasks.includes(task)) {
+        return prevSelectedTasks.filter((t) => t !== task);
+      } else {
+        return [...prevSelectedTasks, task];
+      }
+    });
+  };
 
   const handleChange = (e: any):void => {
     setDescripcion(e.target.value)
@@ -41,9 +53,11 @@ const Formulario = ({ handleCreateTask, list }: FormularioProps) => {
   const handleSubmit = (e: any):void => {
     e.preventDefault();
     const hola:number = id.current++;
+    handleCreateTask(hola,descripcion,'pending',prioridadToNumber(prioridad),dependencias)
     setDescripcion('');
     setPrioridad('');
-    handleCreateTask(hola,descripcion,'pending',prioridadToNumber(prioridad))
+    setDependencias([]);
+    
   }
 
   return(
@@ -54,7 +68,8 @@ const Formulario = ({ handleCreateTask, list }: FormularioProps) => {
         value={descripcion} handleChange={handleChange}/>
         <CampoSeleccionar label='Prioridad Tarea'
         value={prioridad} handleSelect={handleSelect}/>
-        <Depend list={list}/>
+        <Depend list={list}
+        value={dependencias} handleChange={handleCheckboxChange}/>
         <Boton  >Crear</Boton>
         
       </form>
