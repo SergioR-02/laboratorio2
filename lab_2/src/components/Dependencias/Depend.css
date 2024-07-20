@@ -1,0 +1,53 @@
+.containerChecks{
+  font-family: "Montserrat", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 400;
+  font-style: normal;
+  margin: 24px 0;
+}
+
+.containerChecksLabel{
+  display: block;
+  font-weight: 600 ;
+  font-size: 18px;
+  margin-bottom: 8px;
+}
+
+.taskList {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  max-height: 85px; /* Ajusta esta altura según sea necesario */
+  overflow-y: auto;
+  border-radius: 8px;
+  background-color: #FFFFFF;
+}
+
+/* Custom scrollbar */
+.taskList::-webkit-scrollbar {
+  width: 4px;
+}
+
+.taskList::-webkit-scrollbar-thumb {
+  background-color: #000000;
+  border-radius: 8px;
+}
+
+.taskList::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+  border-radius: 10px;
+}
+
+
+.taskItem {
+  margin: 8px 0 8px 10px;
+}
+
+.checkboxLabel {
+  display: flex;
+  align-items: center;
+}
+
+.checkboxLabel input[type="checkbox"] {
+  margin-right: 8px;
+}

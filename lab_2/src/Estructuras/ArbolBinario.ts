@@ -28,7 +28,7 @@ export class BinaryTree<T extends { getId(): number; getPrioridad(): number }> {
   }
 
   private insertNode(node: TreeNode<T>, newNode: TreeNode<T>): void {
-    if (newNode.value.getPrioridad() < node.value.getPrioridad()) {
+    if (newNode.value.getId() < node.value.getId()) {
       if (node.left === null) {
         node.left = newNode;
       } else {

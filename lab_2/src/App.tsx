@@ -16,6 +16,7 @@ function App() {
   const [progress, setProgress] = useState<Task[]>([])
   const [completed, setCompleted] = useState<Task[]>([])
   const [crear, setCrear] = useState<string>('');
+  const [pendingProgress, setPendingProgress] = useState<Task[]>([])
 
   const handleChange = () => {
     setAdd(!add)
@@ -25,7 +26,7 @@ function App() {
     setBarSearch(!barSearch)
   }
 
-  const handleCrteateTask = useCallback((id: number, descripcion: string, estado: string, prioridad: number): void => {
+  const handleCreateTask = useCallback((id: number, descripcion: string, estado: string, prioridad: number): void => {
     const task = new Task(id, descripcion, estado, prioridad);
     taskManager.addTask(task);
     setCrear(new Date().toISOString()); 
@@ -52,16 +53,17 @@ function App() {
     setList(taskManager.pendingTasks.toArray())
     setProgress(taskManager.inProgressTasks.toArray())
     setCompleted(taskManager.completedTasks.toArray())
-    // console.log(list)
+    setPendingProgress([...taskManager.pendingTasks.toArray(), ...taskManager.inProgressTasks.toArray()]);    // console.log(list)
     // console.log(progress)
     // console.log(completed)
   },[crear])
 
+  
   return (
     <>
 
-      <AddForm handleChange={handleChange} handleSearch={handleSearch}/>
-      {add && <Form handleCrteateTask={handleCrteateTask} />}
+      <AddForm handleChange={handleChange} handleSearch={handleSearch} />
+      {add && <Form handleCreateTask={handleCreateTask} list={pendingProgress} />}
       {barSearch && <TipeTask title='Busqueda' listTask={completed} background="#84DAE4" handlefunction={():void=>{}}  type="search"/>}
       <TipeTask title='Tareas Pendientes' listTask={list} background="#148300" handlefunction={handleStartTask} type="pending"/>
       <TipeTask title='Tareas en Progreso' listTask={progress} background="#000E83" handlefunction={handleCompleteTask}  type="progress" />

@@ -3,10 +3,15 @@ import CampoTexto from '../campoTexto/CampoTexto';
 import CampoSeleccionar from '../campoSeleccionar/CampoSeleccionar';
 import Boton from '../Boton/Boton';
 import { useState,useRef } from 'react'
+import Depend from '../Dependencias/Depend';
+import { Task } from '../../Estructuras/tareas';
 
+interface FormularioProps  {
+  handleCreateTask: (id: number, descripcion: string, estado: string, prioridad: number) => void;
+  list: Task[];
+};
 
-const Formulario = ({handleCrteateTask}:
-  {handleCrteateTask:(id:number,descripcion:string,estado:string,prioridad:number)=>void}) => {
+const Formulario = ({ handleCreateTask, list }: FormularioProps) => {
   const [descripcion, setDescripcion] = useState('')
   const [prioridad, setPrioridad] = useState('')
   const id = useRef(0)
@@ -38,7 +43,7 @@ const Formulario = ({handleCrteateTask}:
     const hola:number = id.current++;
     setDescripcion('');
     setPrioridad('');
-    handleCrteateTask(hola,descripcion,'pending',prioridadToNumber(prioridad))
+    handleCreateTask(hola,descripcion,'pending',prioridadToNumber(prioridad))
   }
 
   return(
@@ -49,7 +54,9 @@ const Formulario = ({handleCrteateTask}:
         value={descripcion} handleChange={handleChange}/>
         <CampoSeleccionar label='Prioridad Tarea'
         value={prioridad} handleSelect={handleSelect}/>
+        <Depend list={list}/>
         <Boton  >Crear</Boton>
+        
       </form>
     </section>
   )
