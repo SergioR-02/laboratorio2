@@ -34,7 +34,7 @@ export class TaskManager {
     }
   }
 
-  startTask(task: Task): string|void {
+  startTask(task: Task): string {
     const dependencies = this.taskGraph.getDependencies(task);
     
     // Check if all dependencies are completed
@@ -44,11 +44,11 @@ export class TaskManager {
       this.pendingTasks.delete(task);
       task.estadoNuevo = "Progreso"; // Cambio de estado
       console.log(`Starting task ${task.getId()}: `);
-      
       this.inProgressTasks.enqueue(task);
+      return ""
     } else {
       console.log(`Cannot start task ${task.getId()}: Dependencies are not completed.`);
-      return (`Cannot start task ${task.getId()}): Dependencies are not completed.`);
+      return (`No se puede iniciar la tarea, sus dependencias no se han completado`);
     }
   }
 
@@ -60,7 +60,6 @@ export class TaskManager {
     else{
       const task = this.inProgressTasks.dequeue();
       task.estadoNuevo = "Completada"; // Cambio de estado
-      console.log(`Completing task ${task.getId()}`);
       this.check.push(task);
       this.completedTasks.push(task);
     }

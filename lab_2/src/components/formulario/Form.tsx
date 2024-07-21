@@ -52,12 +52,11 @@ const Formulario = ({ handleCreateTask, list }: FormularioProps) => {
 
   const handleSubmit = (e: any):void => {
     e.preventDefault();
-    const hola:number = id.current++;
-    handleCreateTask(hola,descripcion,'pending',prioridadToNumber(prioridad),dependencias)
+    const newId:number = id.current++;
+    handleCreateTask(newId,descripcion,'pending',prioridadToNumber(prioridad),dependencias)
     setDescripcion('');
     setPrioridad('');
     setDependencias([]);
-    
   }
 
   return(

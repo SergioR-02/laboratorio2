@@ -4,9 +4,7 @@ import {taskManager} from './Estructuras/gestor'
 import {TipeTask} from './components/tipeTasks/TipeTask'
 import {useEffect, useState, useCallback} from 'react'
 import {Task} from './Estructuras/tareas'
-
-
-
+import Mensaje from './components/Mensaje/Mensaje'
 
 
 function App() {
@@ -17,6 +15,12 @@ function App() {
   const [completed, setCompleted] = useState<Task[]>([])
   const [crear, setCrear] = useState<string>('');
   const [pendingProgress, setPendingProgress] = useState<Task[]>([])
+  const [show, setShow] = useState(false)
+  const [mensaje, setMensaje] = useState<string>('')
+
+  const handleShow = () => {
+    setShow(true)
+  }
 
   const handleChange = () => {
     setAdd(!add)
@@ -39,7 +43,11 @@ function App() {
 
   const handleStartTask = useCallback((task?: Task): string|void => {
     if (task) {
-      taskManager.startTask(task);
+      const newMensaje = taskManager.startTask(task);
+      setMensaje(newMensaje);
+      if (newMensaje!=""){
+        handleShow();
+      }
       setCrear(new Date().toISOString());
     } else {}
   },[]);
@@ -59,8 +67,7 @@ function App() {
     setProgress(taskManager.inProgressTasks.toArray())
     setCompleted(taskManager.completedTasks.toArray())
     setPendingProgress([...taskManager.pendingTasks.toArray(), ...taskManager.inProgressTasks.toArray()]);    // console.log(list)
-    // console.log(progress)
-    // console.log(completed)
+
   },[crear])
 
   
@@ -73,6 +80,7 @@ function App() {
       <TipeTask title='Tareas Pendientes' listTask={list} background="#148300" handlefunction={handleStartTask} type="pending"/>
       <TipeTask title='Tareas en Progreso' listTask={progress} background="#000E83" handlefunction={handleCompleteTask}  type="progress" />
       <TipeTask title='Tareas Completadas' listTask={completed} background="#830075" handlefunction={handleDeleteCompletedTask}  type="completed"/>
+      {show===true &&  <Mensaje mensaje={mensaje} setShow={setShow}></Mensaje>}
 
 
     </>
