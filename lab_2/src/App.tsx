@@ -17,6 +17,7 @@ function App() {
   const [pendingProgress, setPendingProgress] = useState<Task[]>([])
   const [show, setShow] = useState(false)
   const [mensaje, setMensaje] = useState<string>('')
+  const [searchs, setSearchs] = useState<Task[]>([])
 
   const handleShow = () => {
     setShow(true)
@@ -66,6 +67,7 @@ function App() {
     setList(taskManager.pendingTasks.toArray())
     setProgress(taskManager.inProgressTasks.toArray())
     setCompleted(taskManager.completedTasks.toArray())
+    setSearchs(taskManager.taskBST.inorder())
     setPendingProgress([...taskManager.pendingTasks.toArray(), ...taskManager.inProgressTasks.toArray()]);    // console.log(list)
 
   },[crear])
@@ -76,7 +78,8 @@ function App() {
 
       <AddForm handleChange={handleChange} handleSearch={handleSearch} />
       {add && <Form handleCreateTask={handleCreateTask} list={pendingProgress} />}
-      {barSearch && <TipeTask title='Busqueda' listTask={completed} background="#84DAE4" handlefunction={():void=>{}}  type="search"/>}
+      {barSearch && 
+      <TipeTask title='Busqueda' listTask={searchs} background="#84DAE4" handlefunction={():void=>{}}  type="search"/>}
       <TipeTask title='Tareas Pendientes' listTask={list} background="#148300" handlefunction={handleStartTask} type="pending"/>
       <TipeTask title='Tareas en Progreso' listTask={progress} background="#000E83" handlefunction={handleCompleteTask}  type="progress" />
       <TipeTask title='Tareas Completadas' listTask={completed} background="#830075" handlefunction={handleDeleteCompletedTask}  type="completed"/>

@@ -70,6 +70,7 @@ export class TaskManager {
       console.log("No tasks Completada");
       return "No tasks Completada";
     } else {
+      this.taskBST.remove(this.completedTasks.peek().getId());
       this.completedTasks.pop();
     }
   }
@@ -78,10 +79,6 @@ export class TaskManager {
     this.taskGraph.addDependency(task1, task2);
   }
 
-  deletePendingTask(task: Task): void {
-    this.pendingTasks.delete(task);
-    this.taskGraph.removeTask(task);
-  }
 
   displayGraph(): void {
     this.taskGraph.displayGraph();

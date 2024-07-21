@@ -30,17 +30,15 @@ const TipeTask = ({ title, listTask, background, handlefunction, type }: TipeTas
 
   useEffect(() => {
     if (ordenar) {
-      // Crear una copia del array y luego ordenar la copia
       const sortedList = [...listTask].sort((a, b) => a.getPrioridad() - b.getPrioridad());
       setNewList(sortedList);
     } else {
       setNewList(listTask);
     }
 
-    if(type==="search"){
-      setNewList(taskManager.taskBST.inorder())
-    }
   },[ordenar,listTask])
+
+
 
   const handleChange = (e: any): void => {
     const selectedValue = e.target.value;
