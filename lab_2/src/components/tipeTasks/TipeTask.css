@@ -60,6 +60,10 @@
   border-radius: 10px;
 }
 
+.busquedaBotton:hover{
+  background-color: #3335cc;
+}
+
 .error{
   color: red;
   font-size: 20px;

@@ -1,39 +1,41 @@
-//Un stack de tipo generico
+// Un stack de tipo genérico
 export class Stack<T> {
-  stack: T[];
+  // Define un array de tipo genérico T para almacenar los elementos del stack
+  stack: T[];  
 
   constructor() {
-    this.stack = [];
+    this.stack = [];  
   }
 
-  push(elemento:T): void{
-    this.stack.push(elemento);
+   // Agrega un nuevo elemento al final del stack
+  push(elemento: T): void {
+    this.stack.push(elemento); 
   }
 
-  empty(): boolean{
-    return this.stack.length == 0;
+   // Devuelve true si el stack está vacío, de lo contrario, false
+  empty(): boolean {
+    return this.stack.length == 0; 
   }
 
-  pop(): T{
-    if(this.empty()){
+  // Remueve y devuelve el último elemento del stack
+  pop(): T {
+    if (this.empty()) {  
       throw new Error("Stack is empty");
     }
-    return this.stack.pop() as T;
+    return this.stack.pop() as T; 
   }
 
-  peek(): T{
-    if(this.empty()){
+  // Devuelve el último elemento del stack sin removerlo
+  peek(): T {
+    if (this.empty()) { 
       throw new Error("Stack is empty");
     }
-    return this.stack[this.stack.length - 1];
+    return this.stack[this.stack.length - 1];  
   }
 
-  contains(element: T): boolean {
-    return this.stack.includes(element);
-  }
-
+  // Devuelve una copia del array que representa el stack
   toArray(): T[] {
-    return this.stack;
+    return this.stack; 
   }
 }
 

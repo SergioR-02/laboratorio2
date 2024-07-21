@@ -1,8 +1,9 @@
 class TreeNode<T> {
+  //Nodo de un árbol binario con un valor de tipo genérico T
   value: T;
   left: TreeNode<T> | null;
   right: TreeNode<T> | null;
-
+  // Constructor para inicializar un nodo con un valor, y punteros a hijos izquierdo y derecho
   constructor(value: T) {
     this.value = value;
     this.left = null;
@@ -12,7 +13,8 @@ class TreeNode<T> {
 
 export class BinaryTree<T extends { getId(): number; getPrioridad(): number }> {
   root: TreeNode<T> | null;
-
+  
+  // Constructor para inicializar un árbol binario con una raíz nula
   constructor() {
     this.root = null;
   }
@@ -21,12 +23,15 @@ export class BinaryTree<T extends { getId(): number; getPrioridad(): number }> {
   insert(value: T): void {
     const newNode = new TreeNode(value);
     if (this.root === null) {
+      // Si la raíz es nula, el nuevo nodo se convierte en la raíz
       this.root = newNode;
     } else {
+      // Si no, se llama a insertNode para encontrar la posición adecuada
       this.insertNode(this.root, newNode);
     }
   }
 
+  // Insertar un nodo en la posición correcta, ordenando por prioridad
   private insertNode(node: TreeNode<T>, newNode: TreeNode<T>): void {
     if (newNode.value.getId() < node.value.getId()) {
       if (node.left === null) {
@@ -48,6 +53,7 @@ export class BinaryTree<T extends { getId(): number; getPrioridad(): number }> {
     this.root = this.removeNode(this.root, id);
   }
 
+  // Eliminar un nodo con un id específico, manteniendo el orden del árbol
   private removeNode(node: TreeNode<T> | null, id: number): TreeNode<T> | null {
     if (node === null) {
       return null;
@@ -75,6 +81,7 @@ export class BinaryTree<T extends { getId(): number; getPrioridad(): number }> {
     }
   }
 
+  // Encontrar el nodo con el valor mínimo (utilizado para eliminar nodos)
   private findMinNode(node: TreeNode<T>): TreeNode<T> {
     while (node.left !== null) {
       node = node.left;
@@ -89,6 +96,7 @@ export class BinaryTree<T extends { getId(): number; getPrioridad(): number }> {
     return result;
   }
 
+  // Recorrre los nodos comparando el id específico
   private searchNodesById(node: TreeNode<T> | null, id: number, result: T[]): void {
     if (node !== null) {
       if (node.value.getId() === id) {
@@ -106,6 +114,7 @@ export class BinaryTree<T extends { getId(): number; getPrioridad(): number }> {
     return result;
   }
 
+  // Recorrre los nodos comparando la prioridad específica
   private searchNodesByPriority(node: TreeNode<T> | null, priority: number, result: T[]): void {
     if (node !== null) {
       if (node.value.getPrioridad() === priority) {
@@ -123,6 +132,7 @@ export class BinaryTree<T extends { getId(): number; getPrioridad(): number }> {
     return result;
   }
 
+  //Recorre el árbol en orden y almacena los valores en un array
   private inorderTraversal(node: TreeNode<T> | null, result: T[]): void {
     if (node !== null) {
       this.inorderTraversal(node.left, result);

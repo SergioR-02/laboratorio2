@@ -1,5 +1,5 @@
 
-
+//Clase tarea
 export class Task{
   private id:number;
   private descripcion:string;
@@ -12,6 +12,8 @@ export class Task{
     this.estado=estado;
     this.prioridad=prioridad;
   }
+
+  //Getters para obtener atributos privadas de la clase
   getId(){
     return this.id;
   }
