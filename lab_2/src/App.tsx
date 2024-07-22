@@ -5,6 +5,7 @@ import {TipeTask} from './components/tipeTasks/TipeTask'
 import {useEffect, useState, useCallback} from 'react'
 import {Task} from './Estructuras/tareas'
 import Mensaje from './components/Mensaje/Mensaje'
+import runPerformanceTests2 from './test/rendimiento2'
 
 
 function App() {
@@ -85,6 +86,7 @@ function App() {
       <TipeTask title='Tareas Completadas' listTask={completed} background="#830075" handlefunction={handleDeleteCompletedTask}  type="completed"/>
       {show===true &&  <Mensaje mensaje={mensaje} setShow={setShow}></Mensaje>}
 
+      <button onClick={()=>runPerformanceTests2([100,1000,1000])}>Test</button>
 
     </>
   )

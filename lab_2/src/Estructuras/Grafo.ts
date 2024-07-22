@@ -37,7 +37,48 @@ export class TaskGraph {
       console.log(`Task ${taskId} depends on: ${dependencies}`);
     });
   }
+
+  
+ // Detectar ciclos en el grafo usando DFS
+  detectCycles(): boolean {
+    const visited = new Set<number>(); // Conjunto de nodos visitados
+    const recStack = new Set<number>(); // Conjunto de nodos en la pila de recursión
+
+    // Función auxiliar para DFS
+    const dfs = (node: number): boolean => {
+      if (recStack.has(node)) {
+        // Si el nodo está en la pila de recursión, hay un ciclo
+        return true;
+      }
+      if (visited.has(node)) {
+        // Si el nodo ya ha sido visitado, no hacer nada
+        return false;
+      }
+
+      // Marcar el nodo como visitado y añadir a la pila de recursión
+      visited.add(node);
+      recStack.add(node);
+
+      // Recorrer los nodos adyacentes
+      const neighbors = this.graph.get(node) || [];
+      for (const neighbor of neighbors) {
+        if (dfs(neighbor)) {
+          return true; // Si se detecta un ciclo en el subárbol, devolver verdadero
+        }
+      }
+
+      // Quitar el nodo de la pila de recursión después de explorar
+      recStack.delete(node);
+      return false;
+    };
+
+    // Verificar todos los nodos en el grafo
+    for (const node of this.graph.keys()) {
+      if (dfs(node)) {
+        return true; // Si se detecta un ciclo en cualquier nodo, devolver verdadero
+      }
+    }
+    return false; // No se encontraron ciclos
+  }
 }
-
-
 

@@ -1,4 +1,4 @@
-import { IoIosCloseCircle } from 'react-icons/io';
+
 import "./Tarjetas.css"
 import { Task } from '../../Estructuras/tareas';
 
@@ -22,7 +22,6 @@ const Tarjetas = ({task,backgrounds,handleStartTask,type}:{type:string,task:Task
 
   return(
     <div className="Tarjeta" >
-      {type==="pending" && <IoIosCloseCircle className="eliminar" />}
       <div className="encabezado" style={{ backgroundColor: backgrounds}}>
       </div>
       

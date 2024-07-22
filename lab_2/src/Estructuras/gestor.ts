@@ -14,6 +14,7 @@ export class TaskManager {
   check: Task[];
 
   constructor() {
+    // Inicializa las estructuras de datos vacías
     this.pendingTasks = new LinkedList<Task>();
     this.inProgressTasks = new Queue<Task>();
     this.completedTasks = new Stack<Task>();
@@ -22,11 +23,15 @@ export class TaskManager {
     this.check = [];
   }
 
-  addTask(task: Task, dependencies?:Task[]): void {
+  addTask(task: Task, dependencies?: Task[]): void {
+    // Añade la tarea a la lista de tareas pendientes
     this.pendingTasks.addStart(task);
+    // Inserta la tarea en el árbol binario de búsqueda
     this.taskBST.insert(task);
+    // Añade la tarea al grafo
     this.taskGraph.addTask(task);
 
+    // Añade las dependencias si existen
     if (dependencies) {
       dependencies.forEach((dep) => {
         this.addDependency(task, dep);
@@ -35,29 +40,33 @@ export class TaskManager {
   }
 
   startTask(task: Task): string {
+    // Obtiene las dependencias de la tarea
     const dependencies = this.taskGraph.getDependencies(task);
     
-    // Check if all dependencies are completed
+    // Verifica si todas las dependencias están completadas
     const dependenciesCompleted = dependencies.every(depId => this.check.find(task => task.getId() === depId));
 
     if (dependenciesCompleted) {
+      // Si todas las dependencias están completadas, mueve la tarea a la cola de tareas en progreso
       this.pendingTasks.delete(task);
       task.estadoNuevo = "Progreso"; // Cambio de estado
-      console.log(`Starting task ${task.getId()}: `);
+      //console.log(`Starting task ${task.getId()}: `);
       this.inProgressTasks.enqueue(task);
-      return ""
+      return "";
     } else {
-      console.log(`Cannot start task ${task.getId()}: Dependencies are not completed.`);
-      return (`No se puede iniciar la tarea, sus dependencias no se han completado`);
+      // Si no, devuelve un mensaje indicando que no se puede iniciar la tarea
+      //console.log(`Cannot start task ${task.getId()}: Dependencies are not completed.`);
+      return `No se puede iniciar la tarea, sus dependencias no se han completado`;
     }
   }
 
-  completeTask(): string|void {
+  completeTask(): string | void {
     if (this.inProgressTasks.empty()) {
-      console.log("No tasks in Progreso");
-      return "No tasks in Progreso";
-    }
-    else{
+      // Si no hay tareas en progreso, devuelve un mensaje
+      //console.log("No hay tareas en progreso");
+      return "No hay tareas en progreso";
+    } else {
+      // Si hay tareas en progreso, mueve la tarea a la pila de tareas completadas
       const task = this.inProgressTasks.dequeue();
       task.estadoNuevo = "Completada"; // Cambio de estado
       this.check.push(task);
@@ -65,67 +74,35 @@ export class TaskManager {
     }
   }
 
-  deleteCompletedTask(): string|void {
+  deleteCompletedTask(): string | void {
     if (this.completedTasks.empty()) {
-      console.log("No tasks Completada");
-      return "No tasks Completada";
+      // Si no hay tareas completadas, devuelve un mensaje
+      //console.log("No hay tareas Completadas");
+      return "No hay tareas Completadas";
     } else {
+      // Si hay tareas completadas, elimina la tarea del árbol binario de búsqueda y de la pila de tareas completadas
       this.taskBST.remove(this.completedTasks.peek().getId());
       this.completedTasks.pop();
     }
   }
 
   addDependency(task1: Task, task2: Task): void {
+    // Añade una dependencia entre dos tareas en el grafo
     this.taskGraph.addDependency(task1, task2);
   }
 
-
   displayGraph(): void {
+    // Muestra el contenido del grafo 
     this.taskGraph.displayGraph();
   }
 
-  searchTask(type:string,id: number): Task[] {
-    if(type === 'id'){
+  searchTask(type: string, id: number): Task[] {
+    // Busca tareas en el árbol binario de búsqueda por ID o por prioridad
+    if (type === 'id') {
       return this.taskBST.searchById(id);
-    }else{
+    } else {
       return this.taskBST.searchByPriority(id);
     }
   }
 }
-
-// Ejemplo de uso
 export const taskManager = new TaskManager();
-// const task1 = new Task(1, "Design", "hola", 3);
-// const task2 = new Task(2, "Implementation","Hola", 3);
-// const task3 = new Task(3, "Testing", "Hola", 1);
-// const task4 = new Task(4, "Testing", "hpta", 3);
-// const task5 = new Task(1, "1", "hola", 2);
-// const task6 = new Task(2, "2","Hola", 1);
-// const task7 = new Task(0, "3", "Hola", 2);
-// const task8 = new Task(1, "4", "hpta", 3);
-// const task9 = new Task(4, "5", "hpta", 3);
-
-
-
-// taskManager.addTask(task1);
-// taskManager.addTask(task2);
-// taskManager.addTask(task3);
-// taskManager.addTask(task4);
-// taskManager.addTask(task5);
-// taskManager.addTask(task6);
-// taskManager.addTask(task7);
-// taskManager.addTask(task8);
-// taskManager.addTask(task9);
-
-// console.log(taskManager.taskBST.searchByPriority(3));
-// console.log(taskManager.taskBST.searchById(1));
-
-
-// taskManager.addDependency(task1, task2); // task1 depende de task2
-// taskManager.addDependency(task2, task3); // task2 depende de task3
-
-
-// taskManager.startTask(task1); // Luego intentamos iniciar task1
-// taskManager.completeTask();    // Completamos task1
-// taskManager.completeTask();    // Completamos task2
-// taskManager.taskGraph.displayGraph();
