@@ -27,8 +27,9 @@ function measureTime(operation: () => void): number {
 // Función para realizar las pruebas de rendimiento
 function runPerformanceTests2(taskCounts: number[]) {
   for (const count of taskCounts) {
-    const tasks = generateTasks(count);
+    const tasks = generateTasks(count); // Genera un número de tareas basado en el conteo actual
 
+    // Crear instancias de estructuras de datos
     const linkedList = new LinkedList<Task>();
     const queue = new Queue<Task>();
     const stack = new Stack<Task>();
@@ -37,17 +38,14 @@ function runPerformanceTests2(taskCounts: number[]) {
 
     console.log(`--- Pruebas para ${count} tareas ---`);
 
+    // Sección de Pruebas: Inserción
+    console.log('--- Inserción ---');
+
     // Medir tiempo de añadir en LinkedList
     const addLinkedListTime = measureTime(() => {
       tasks.forEach(task => linkedList.addStart(task));
     });
     console.log(`Añadir en LinkedList: ${addLinkedListTime.toFixed(2)} ms`);
-
-    // Medir tiempo de eliminar en LinkedList
-    const deleteLinkedListTime = measureTime(() => {
-      tasks.forEach(task => linkedList.delete(task));
-    });
-    console.log(`Eliminar en LinkedList: ${deleteLinkedListTime.toFixed(2)} ms`);
 
     // Medir tiempo de añadir en Queue
     const addQueueTime = measureTime(() => {
@@ -55,27 +53,11 @@ function runPerformanceTests2(taskCounts: number[]) {
     });
     console.log(`Añadir en Queue: ${addQueueTime.toFixed(2)} ms`);
 
-    // Medir tiempo de eliminar en Queue
-    const deleteQueueTime = measureTime(() => {
-      while (!queue.empty()) {
-        queue.dequeue();
-      }
-    });
-    console.log(`Eliminar en Queue: ${deleteQueueTime.toFixed(2)} ms`);
-
     // Medir tiempo de añadir en Stack
     const addStackTime = measureTime(() => {
       tasks.forEach(task => stack.push(task));
     });
     console.log(`Añadir en Stack: ${addStackTime.toFixed(2)} ms`);
-
-    // Medir tiempo de eliminar en Stack
-    const deleteStackTime = measureTime(() => {
-      while (!stack.empty()) {
-        stack.pop();
-      }
-    });
-    console.log(`Eliminar en Stack: ${deleteStackTime.toFixed(2)} ms`);
 
     // Medir tiempo de añadir en BinaryTree
     const addBinaryTreeTime = measureTime(() => {
@@ -83,39 +65,64 @@ function runPerformanceTests2(taskCounts: number[]) {
     });
     console.log(`Añadir en BinaryTree: ${addBinaryTreeTime.toFixed(2)} ms`);
 
-    // Medir tiempo de búsqueda en BinaryTree por id
-    const searchByIdTime = measureTime(() => {
-      tasks.forEach(task => binaryTree.searchById(task.getId()));
-    });
-    console.log(`Buscar por ID en BinaryTree: ${searchByIdTime.toFixed(2)} ms`);
-
-    // Medir tiempo de búsqueda en BinaryTree por prioridad
-    const searchByPriorityTime = measureTime(() => {
-      tasks.forEach(task => binaryTree.searchByPriority(task.getPrioridad()));
-    });
-    console.log(`Buscar por Prioridad en BinaryTree: ${searchByPriorityTime.toFixed(2)} ms`);
-    
-    // Medir tiempo de eliminar en BinaryTree
-    const deleteBinaryTreeTime = measureTime(() => {
-      tasks.forEach(task => binaryTree.remove(task.getId()));
-    });
-    console.log(`Eliminar en BinaryTree: ${deleteBinaryTreeTime.toFixed(2)} ms`);
-    
     // Medir tiempo de insertar en TaskGraph
     const addTaskGraphTime = measureTime(() => {
       tasks.forEach(task => taskGraph.addTask(task));
     });
     console.log(`Añadir en TaskGraph: ${addTaskGraphTime.toFixed(2)} ms`);
 
+    // Sección de Pruebas: Recorrido Inorden
+    console.log('--- Recorrido Inorden ---');
+
+    // Medir tiempo de recorrido en orden en BinaryTree
+    const inorderTime = measureTime(() => {
+      binaryTree.inorder(); // Ejecutar el recorrido en orden
+    });
+    console.log(`Recorrido inorden: ${inorderTime.toFixed(2)} ms`);
+
+    // Sección de Pruebas: Dependencias
+    console.log('--- Dependencias ---');
+
     // Medir tiempo de añadir dependencias en TaskGraph
     const addDependencyTime = measureTime(() => {
       tasks.forEach((task, index) => {
         if (index > 0) {
-          taskGraph.addDependency(tasks[index], tasks[index - 1]);
+          taskGraph.addDependency(tasks[index], tasks[index - 1]); // Agrega una dependencia entre la tarea actual y la tarea anterior
         }
       });
     });
     console.log(`Añadir dependencias en TaskGraph: ${addDependencyTime.toFixed(2)} ms`);
+
+    // Sección de Pruebas: Eliminación
+    console.log('--- Eliminación ---');
+
+    // Medir tiempo de eliminar en LinkedList
+    const deleteLinkedListTime = measureTime(() => {
+      tasks.forEach(task => linkedList.delete(task)); // Elimina cada tarea de la lista
+    });
+    console.log(`Eliminar en LinkedList: ${deleteLinkedListTime.toFixed(2)} ms`);
+
+    // Medir tiempo de eliminar en Queue
+    const deleteQueueTime = measureTime(() => {
+      while (!queue.empty()) {
+        queue.dequeue(); // Desencola cada tarea hasta que la cola esté vacía
+      }
+    });
+    console.log(`Eliminar en Queue: ${deleteQueueTime.toFixed(2)} ms`);
+
+    // Medir tiempo de eliminar en Stack
+    const deleteStackTime = measureTime(() => {
+      while (!stack.empty()) {
+        stack.pop(); // Desapila cada tarea hasta que la pila esté vacía
+      }
+    });
+    console.log(`Eliminar en Stack: ${deleteStackTime.toFixed(2)} ms`);
+
+    // Medir tiempo de eliminar en BinaryTree
+    const deleteBinaryTreeTime = measureTime(() => {
+      tasks.forEach(task => binaryTree.remove(task.getId())); // Elimina cada tarea del árbol por su ID
+    });
+    console.log(`Eliminar en BinaryTree: ${deleteBinaryTreeTime.toFixed(2)} ms`);
   }
 }
 

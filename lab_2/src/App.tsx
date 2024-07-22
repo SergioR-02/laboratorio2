@@ -5,7 +5,8 @@ import {TipeTask} from './components/tipeTasks/TipeTask'
 import {useEffect, useState, useCallback} from 'react'
 import {Task} from './Estructuras/tareas'
 import Mensaje from './components/Mensaje/Mensaje'
-import runPerformanceTests2 from './test/rendimiento2'
+// import runPerformanceTests2 from './test/rendimiento2'
+// import Admin from './components/grafics/Admin'
 
 
 function App() {
@@ -73,7 +74,8 @@ function App() {
 
   },[crear])
 
-  
+  //Resultados por consola
+  //const handleDate=()=>{runPerformanceTests2([100, 1000, 10000]);}
   return (
     <>
 
@@ -86,7 +88,9 @@ function App() {
       <TipeTask title='Tareas Completadas' listTask={completed} background="#830075" handlefunction={handleDeleteCompletedTask}  type="completed"/>
       {show===true &&  <Mensaje mensaje={mensaje} setShow={setShow}></Mensaje>}
 
-      <button onClick={()=>runPerformanceTests2([100,1000,1000])}>Test</button>
+  
+      {/*Pruebas de rendimiento (Mostrar graficas) 
+      <Admin></Admin> */}
 
     </>
   )
