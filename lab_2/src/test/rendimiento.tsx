@@ -93,9 +93,10 @@ function runPerformanceTests(taskCounts: number[]): any[] {
 
     // Medir el tiempo para agregar dependencias entre tareas en el grafo
     const addDependencyTime = measureTime(() => {
-      tasks.forEach((task, index) => {
+      tasks.forEach((currentTask, index) => {
         if (index > 0) {
-          taskGraph.addDependency(tasks[index], tasks[index - 1]); // Agrega una dependencia entre la tarea actual y la tarea anterior
+          const previousTask = tasks[index - 1];
+          taskGraph.addDependency(currentTask, previousTask); // Agrega una dependencia entre la tarea actual y la tarea anterior
         }
       });
     });
